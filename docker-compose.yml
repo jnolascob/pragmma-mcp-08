@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mcp-server:
+    build: ./mcp-server
+    container_name: mcp-stocks-server
+    environment:
+      - ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}
+    restart: unless-stopped
+    networks:
+      - agent-network
+
+  agent:
+    build: ./agent
+    container_name: stock-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LANGSMITH_API_KEY=${LANGSMITH_API_KEY}
+      - LANGSMITH_PROJECT=${LANGSMITH_PROJECT}
+    volumes:
+      - ./mcp-server/dist:/mcp-server/dist:ro
+    depends_on:
+      - mcp-server
+    restart: unless-stopped
+    networks:
+      - agent-network
+
+networks:
+  agent-network:
+    driver: bridge

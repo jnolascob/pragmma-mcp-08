@@ -20,10 +20,10 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, "../.env") });
 // dotenv.config({ path: path.join(__dirname, "../../.env") });
 
-const ALPHA_VANTAGE_API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
+const ALPHAVANTAGE_API_KEY = process.env.ALPHAVANTAGE_API_KEY;
 
-if (!ALPHA_VANTAGE_API_KEY) {
- console.error("ERROR: ALPHA_VANTAGE_API_KEY no configurada");
+if (!ALPHAVANTAGE_API_KEY) {
+ console.error("ERROR: ALPHAVANTAGE_API_KEY no configurada");
  process.exit(1);
 }
 
@@ -55,7 +55,7 @@ async function getStockQuote(symbol: string): Promise<StockQuote> {
        params: {
          function: "GLOBAL_QUOTE",
          symbol: symbol.toUpperCase(),
-         apikey: ALPHA_VANTAGE_API_KEY,
+         apikey: ALPHAVANTAGE_API_KEY,
        },
      }
    );
@@ -87,7 +87,7 @@ async function getStockOverview(symbol: string): Promise<StockOverview> {
        params: {
          function: "OVERVIEW",
          symbol: symbol.toUpperCase(),
-         apikey: ALPHA_VANTAGE_API_KEY,
+         apikey: ALPHAVANTAGE_API_KEY,
        },
      }
    );
