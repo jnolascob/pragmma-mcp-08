@@ -1,11 +1,12 @@
-version: '3.8'
-
 services:
   mcp-server:
     build: ./mcp-server
     container_name: mcp-stocks-server
+    ports:
+      - "3000:3000"
     environment:
       - ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}
+      - PORT=3000
     restart: unless-stopped
     networks:
       - agent-network
@@ -19,8 +20,6 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - LANGSMITH_API_KEY=${LANGSMITH_API_KEY}
       - LANGSMITH_PROJECT=${LANGSMITH_PROJECT}
-    volumes:
-      - ./mcp-server/dist:/mcp-server/dist:ro
     depends_on:
       - mcp-server
     restart: unless-stopped
